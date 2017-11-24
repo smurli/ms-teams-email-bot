@@ -17,11 +17,6 @@ var connector = new teams.TeamsChatConnector({
     appPassword: "obronYGM692-meFPBV64%%{"
 });
 
-/* var https_options = {
-    key: fs.readFileSync('./ssl/key.pem'),
-    certificate: fs.readFileSync('./ssl/certificate.pem')
-  }; */
-
 var server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 3978, function () {
     console.log('%s listening to %s', server.name, server.url);
@@ -38,8 +33,8 @@ function sendMail(session, from, to, cc, message) {
 
     var transporter = nodemailer.createTransport({
         host: 'us-smtp-inbound-1.mimecast.com', // Office 365 server
-        port: 25,     // secure SMTP
-        secure: false, // false for TLS - as a boolean not string - but the default is false so just remove this completely
+        port: 25,     
+        secure: false, 
         tls: {
             ciphers: 'SSLv3'
         }
@@ -57,7 +52,6 @@ function sendMail(session, from, to, cc, message) {
 
     mailText = "You attention is requested by " + from.name + " in a teams conversation:\n" 
     mailText = mailText + (("https://teams.microsoft.com/_#/conversations/none?threadId=" + session.message.address.conversation.id).replace("skype;messageid", "skype&messageid"));
-    //mailText = "Link:" + "https://teams.microsoft.com/_#/conversations/none?threadId=19:ab865ad66c6c4578872fa9061d0fbbc8@thread.skype";
     mailText = mailText + "\n\nMessage:\n" + message;
 
     // setup e-mail data
@@ -79,12 +73,10 @@ function sendMail(session, from, to, cc, message) {
     // send mail with defined transport object
     transporter.sendMail(mailOptions, function(error, info){
     if(error){
-        //console.log(error);
         session.send("Failed to send email. Error:" + error);
         session.endDialog();
         return;
     } else {
-        //console.log('Message sent: ' + info.response);
         session.send("Email Sent to:" + toAddr);
         session.endDialog();
     }
@@ -140,6 +132,3 @@ bot.set(`persistUserData`, false);
 bot.set(`persistConversationData`, false);
 bot.set("storage", null);
 
-/*bot.on('conversationUpdate', (msg) => { 
-    console.log(msg);
-});*/
