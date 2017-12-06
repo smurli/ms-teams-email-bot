@@ -1,20 +1,12 @@
-var msg = "Hello Murli"
-console.log(msg)
-
 var restify = require('restify');
 var fs = require('fs');
 var builder = require('botbuilder');
 var teams = require("botbuilder-teams");
 const nodemailer = require('nodemailer');
 
-/* var connector = new teams.TeamsChatConnector({
+var connector = new teams.TeamsChatConnector({
     appId: process.env.MICROSOFT_APP_ID,
     appPassword: process.env.MICROSOFT_APP_PASSWORD
-});
- */
-var connector = new teams.TeamsChatConnector({
-    appId: "53c990dd-83ca-45c8-b0f8-eac6b04d96c1",
-    appPassword: "obronYGM692-meFPBV64%%{"
 });
 
 var server = restify.createServer();
@@ -29,7 +21,7 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
  * @param {String} message  - string message to be sent as email body.
  */
 function sendMail(session, from, to, cc, message) {
-    var subject = "You attention is requested by " + from.name + " in teams channel";
+    var subject = "You attention is needed in a teams conversation";
 
     var transporter = nodemailer.createTransport({
         host: 'us-smtp-inbound-1.mimecast.com', // Office 365 server
@@ -63,13 +55,6 @@ function sendMail(session, from, to, cc, message) {
         //html: '<b>Hello world </b><br> This is the first email sent with Nodemailer in Node.js' // html body
     };
 
-    /*console.log("FromAddr:" + fromAddr);
-    console.log("Toaddr:"+ toAddr);
-    console.log("CCaddr:"+ ccAddr);
-    console.log("Message:" + mailText);*/
-    /*session.send("Mail Sent");
-    session.endDialog();*/
-    
     // send mail with defined transport object
     transporter.sendMail(mailOptions, function(error, info){
     if(error){
@@ -79,6 +64,7 @@ function sendMail(session, from, to, cc, message) {
     } else {
         session.send("Email Sent to:" + toAddr);
         session.endDialog();
+        console.log("Mail Sent");
     }
 });
 
@@ -87,6 +73,7 @@ function sendMail(session, from, to, cc, message) {
 server.post('/api/messages', connector.listen());
 var bot = new builder.UniversalBot(connector, [
     function (session) {
+        console.log("Message Received");
         var mentions = [];
         for (var i=0; i<session.message.entities.length; i++) {
             o = session.message.entities[i];
@@ -102,6 +89,7 @@ var bot = new builder.UniversalBot(connector, [
             conversationId,
             (err, result) => {
                 if (err) {
+                    console.log("Failed to Fetch Members.Error:"+err);
                 }
                 else {
                     var arrayLength = result.length;
@@ -111,7 +99,6 @@ var bot = new builder.UniversalBot(connector, [
                         memberAddr[result[i].name] = result[i].email;
                     }
                     toAddr = [];
-                    toAddr.push({name:'Murli Sivashanmugam', email:"msivashanmugam@parallelwireless.com"});
                     for(var i=0;i<mentions.length;i++) {
                         if(mentions[i] in memberAddr ) {
                             var addr = {name:mentions[i], email:memberAddr[mentions[i]]};
@@ -131,4 +118,3 @@ bot.use(stripBotAtMentions);
 bot.set(`persistUserData`, false);
 bot.set(`persistConversationData`, false);
 bot.set("storage", null);
-
