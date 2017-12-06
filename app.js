@@ -21,7 +21,7 @@ server.listen(process.env.bot_port || process.env.BOT_PORT || 3978, function () 
  * @param {String} message  - string message to be sent as email body.
  */
 function sendMail(session, from, to, cc, message) {
-    var subject = "You attention is needed in a teams conversation";
+    var subject = "You attention is requested in a teams conversation";
 
     var transporter = nodemailer.createTransport({
         host: 'us-smtp-inbound-1.mimecast.com', // Office 365 server
