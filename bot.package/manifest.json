@@ -1,0 +1,38 @@
+{
+    "$schema": "https://statics.teams.microsoft.com/sdk/v1.0/manifest/MicrosoftTeams.schema.json", 
+    "manifestVersion": "1.0",
+    "version": "1.0.0",
+    "id": "53c990dd-83ca-45c8-b0f8-eac6b04d96c1", 
+    "packageName": "li.mur.t-email",
+    "developer": {
+      "name": "Murli Sivashanmugam",
+      "websiteUrl": "https://mur.li/",
+      "privacyUrl": "https://mur.li/privacy",
+      "termsOfUseUrl": "https://mur.li/app-tos"
+    },
+    "name": {
+      "short": "t-email",
+      "full": "Teams email relay"
+    },
+    "description": {
+      "short": "Relays messages to @mentions to their email address",
+      "full": "Relays messages to @mentions to their email address"
+    },
+    "icons": {
+      "outline": "icon20.png", 
+      "color": "icon96.png" 
+    },
+    "accentColor": "#4464ee",
+    "bots": [
+      {
+        "botId": "53c990dd-83ca-45c8-b0f8-eac6b04d96c1",
+        "needsChannelSelector": "true",
+        "isNotificationOnly": "false",
+        "scopes": [ "team" ]
+      }
+    ],
+    "permissions": [
+      "identity",
+      "messageTeamMembers"
+    ]
+}
