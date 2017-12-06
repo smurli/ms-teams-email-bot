@@ -10,7 +10,7 @@ var connector = new teams.TeamsChatConnector({
 });
 
 var server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3978, function () {
+server.listen(process.env.bot_port || process.env.BOT_PORT || 3978, function () {
     console.log('%s listening to %s', server.name, server.url);
 });
 
