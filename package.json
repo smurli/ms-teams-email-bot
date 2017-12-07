@@ -15,4 +15,5 @@
     "restify": "^6.3.3",
     "restify-https": "0.0.3"
   }
+  "repository": "smurli/ms-teams-email-bot"
 }
