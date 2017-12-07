@@ -37,19 +37,29 @@ function sendMail(session, from, to, cc, message) {
     var toAddr = "";
     for (var i=0; i<to.length; i++) {
         if(toAddr) {
-            toAddr.concat(", ")
+            toAddr = toAddr.concat(", ")
         }
         toAddr = toAddr.concat(to[i].name + " <" + to[i].email + ">")
     }
 
+    message = message.replace(/<at>/g, "'");
+    message = message.replace(/<\/at>/g, "'");
     mailText = "You attention is requested by " + from.name + " in a teams conversation:\n" 
     mailText = mailText + (("https://teams.microsoft.com/_#/conversations/none?threadId=" + session.message.address.conversation.id).replace("skype;messageid", "skype&messageid"));
     mailText = mailText + "\n\nMessage:\n" + message;
 
+    console.log("Mail Options:");
+    console.log("from:"+fromAddr);
+    console.log("to:"+toAddr);
+    console.log("cc:"+ccAddr);
+    console.log("subject:"+subject);
+    console.log("text:"+mailText)
+    
     // setup e-mail data
     var mailOptions = {
         from: fromAddr,
         to: toAddr,
+        cc: ccAddr,
         subject: subject,
         text: mailText
         //html: '<b>Hello world </b><br> This is the first email sent with Nodemailer in Node.js' // html body
