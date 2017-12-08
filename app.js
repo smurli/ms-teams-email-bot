@@ -21,6 +21,13 @@ server.listen(process.env.bot_port || process.env.BOT_PORT || 3978, function () 
  * @param {String} message  - string message to be sent as email body.
  */
 function sendMail(session, from, to, cc, message) {
+
+    if(to.length <= 0) {
+        session.send("No user @mentioned in post.");
+        session.endDialog();
+        console.log("No user @mentioned in post.");
+        return;
+    }
     var subject = "You attention is requested in a teams conversation";
 
     var transporter = nodemailer.createTransport({
@@ -128,3 +135,7 @@ bot.use(stripBotAtMentions);
 bot.set(`persistUserData`, false);
 bot.set(`persistConversationData`, false);
 bot.set("storage", null);
+
+//bot.on('conversationUpdate', (msg) => { 
+//    console.log(msg);
+//});
