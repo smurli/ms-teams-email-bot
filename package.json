@@ -1,0 +1,19 @@
+{
+  "name": "ms-teams-mail-bot",
+  "version": "1.0.0",
+  "description": "Micrt\bosoft Teams Email b\bBot",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Murli Sivashanmugam",
+  "license": "ISC",
+  "dependencies": {
+    "botbuilder": "^3.12.0",
+    "botbuilder-teams": "^0.1.6",
+    "nodemailer": "^4.4.0",
+    "restify": "^6.3.3",
+    "restify-https": "0.0.3"
+  }
+  "repository": "smurli/ms-teams-email-bot"
+}
